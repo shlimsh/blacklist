@@ -7,7 +7,7 @@ datadogRum.init({
   site: 'datadoghq.com',
   service: 'shlim-front',
   env: 'dev',
-  version: '1.0.1',
+  version: '1.0.2',
   sessionSampleRate: 100,
   sessionReplaySampleRate: 100,
   trackUserInteractions: true,
@@ -22,6 +22,15 @@ datadogRum.setUser({
     name: '홍길동', // 사용자 이름
     email: 'shlim@metanet.co.kr', // 사용자 이메일
   });
+
+  import { datadogLogs } from '@datadog/browser-logs'
+
+  datadogLogs.init({
+    clientToken: 'pub5184a98c600b3d5e2c6bbdff3c551686',
+    site: 'datadoghq.com',
+    forwardErrorsToLogs: true,
+    sessionSampleRate: 100,
+  })
 
 
 // Vue Router 임포트

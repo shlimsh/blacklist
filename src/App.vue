@@ -1,91 +1,62 @@
 <template>
-  <div id="app" class="container-fluid">
-    <div class="row">
-      <!-- 사이드바 영역 -->
-      <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar">
-        <div class="sidebar-sticky">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">
-                카테고리 1
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                카테고리 2
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                카테고리 3
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                카테고리 4
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+  <div id="app" class="container py-5">
+    <h1 class="text-center text-primary mb-4">☠️블랙리스트 관리☠️</h1>
+    
+    <!-- 사용자 추가 버튼 -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <button @click="openUserForm" class="btn btn-primary w-100">🎎 사용자 추가</button>
+      </div>
+    </div>
 
-      <!-- 메인 콘텐츠 영역 -->
-      <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-4">
-        <h1 class="text-center text-primary mb-4">☠️블랙리스트 관리☠️</h1>
-        <!-- 사용자 추가 버튼 -->
-        <div class="row justify-content-center mb-4">
-          <div class="col-12 col-md-6 col-lg-4">
-            <button @click="openUserForm" class="btn btn-light w-100">🎎 사용자 추가</button>
-          </div>
-        </div>
+    <!-- 네이버 로그인 섹션 -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <button @click="redirectToNaverLogin" class="btn btn-success w-100">
+          💚 네이버 로그인
+        </button>
+      </div>
+    </div>
 
-        <!-- 네이버 로그인 섹션 -->
-        <div class="row justify-content-center mb-4">
-          <div class="col-12 col-md-6 col-lg-4">
-            <button @click="redirectToNaverLogin" class="btn btn-success-light w-100">
-              💚 네이버 로그인
-            </button>
-          </div>
-        </div>
+    <!-- 사용자 조회 버튼 -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <button @click="toggleUserList" class="btn btn-success w-100">
+          {{ showUsers ? "사용자 숨기기" : "🔍 사용자 조회" }}
+        </button>
+      </div>
+    </div>
 
-        <!-- 사용자 조회 버튼 -->
-        <div class="row justify-content-center mb-4">
-          <div class="col-12 col-md-6 col-lg-4">
-            <button @click="toggleUserList" class="btn btn-info-light w-100">
-              {{ showUsers ? "사용자 숨기기" : "🔍 사용자 조회" }}
-            </button>
-          </div>
-        </div>
-
-        <!-- 사용자 목록 -->
-        <div v-if="showUsers">
-          <h2 class="text-center mb-4">사용자 목록</h2>
-          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-            <div class="col mb-3" v-for="user in users" :key="user.id">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title" style="font-size: 16px;">{{ user.name }}</h5>
-                  <p class="card-text">이메일: {{ user.email }}</p>
-                  <p class="card-text">전화번호: {{ user.phone }}</p>
-                  <p class="card-text">생년월일: {{ user.birthdate }}</p>
-                  <p class="card-text">주소: {{ user.address }}</p>
-                </div>
-              </div>
+    <!-- 사용자 목록 -->
+    <div v-if="showUsers">
+      <h2 class="text-center mb-4">사용자 목록</h2>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col mb-3" v-for="user in users" :key="user.id">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title" style="font-size: 16px;">{{ user.name }}</h5>
+              <p class="card-text">이메일: {{ user.email }}</p>
+              <p class="card-text">비밀번호: {{ user.password }}</p>
+              <p class="card-text">전화번호: {{ user.phone }}</p>
+              <p class="card-text">생년월일: {{ user.birthdate }}</p>
+              <p class="card-text">주소: {{ user.address }}</p>
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- 날짜와 시간 표시 -->
-        <div class="datetime">
-          <p>현재 날짜와 시간: {{ datetime }}</p>
-        </div>
-      </main>
+    <!-- 날짜와 시간 표시 -->
+    <div class="datetime">
+      <p>현재 날짜와 시간: {{ datetime }}</p>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { createApp } from "vue";
+import UserForm from "@/components/UserForm.vue"; // UserForm 컴포넌트 임포트
 
 export default {
   data() {
@@ -99,7 +70,15 @@ export default {
   methods: {
     // 사용자 추가 폼을 새 창으로 열기
     openUserForm() {
-      window.open("/user-form", "사용자 추가", "width=600,height=700");
+      const userFormWindow = window.open('', '사용자 추가', 'width=600,height=700');
+
+      // 새 창에 Vue 앱을 마운트할 div 요소 추가
+      userFormWindow.document.write('<div id="app"></div>');
+      userFormWindow.document.close();
+
+      // 새 창에서 Vue 앱을 초기화하고, UserForm 컴포넌트를 마운트
+      const app = createApp(UserForm);
+      app.mount(userFormWindow.document.getElementById('app'));
     },
 
     // 사용자 목록 조회
@@ -146,28 +125,18 @@ export default {
 </script>
 
 <style scoped>
-/* Sidebar 스타일링 */
-.sidebar {
-  background-color: #f8f9fa;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  padding-top: 20px;
-}
 
-.sidebar .nav-item {
-  margin-bottom: 10px;
-}
-
-.sidebar .nav-link {
-  color: #333;
-  font-weight: 500;
-}
-
-.sidebar .nav-link.active {
-  background-color: #007bff;
+.datetime {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
 }
+
 
 /* Main content 스타일링 */
 main {
@@ -203,19 +172,4 @@ main {
   background-color: #80b3ff;
 }
 
-/* 날짜와 시간 스타일링 */
-.datetime {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.card-body {
-  font-size: 14px;
-}
 </style>
