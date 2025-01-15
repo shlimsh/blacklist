@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../App.vue';
 import UserForm from '../components/UserForm.vue';
+import SignUpForm from '../components/SignUpForm.vue';
 
 
 const routes = [
@@ -8,6 +9,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/signup',  // 회원가입 페이지 경로 수정
+    name: 'SignUpForm',
+    component: SignUpForm
   },
   {
     path: '/user-form',

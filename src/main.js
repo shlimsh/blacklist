@@ -1,20 +1,23 @@
 // eslint-disable-next-line vue/multi-word-component-names
+// import { datadogRum } from '@datadog/browser-rum';
 import { datadogRum } from '@datadog/browser-rum';
-
 datadogRum.init({
   applicationId: '10b37897-fb44-4b9a-9b81-0c74c23b9c1a',
   clientToken: 'pub5184a98c600b3d5e2c6bbdff3c551686',
   site: 'datadoghq.com',
   service: 'shlim-front',
   env: 'dev',
-  version: '1.0.2',
+  version: '1.0.5',
   sessionSampleRate: 100,
   sessionReplaySampleRate: 100,
   trackUserInteractions: true,
   trackResources: true,
   trackLongTasks: true,
   defaultPrivacyLevel: 'mask-user-input',
-  allowedTracingUrls: ["http://localhost", "https://localhost"],
+//  allowedTracingUrls: ['https://localhost'],
+  allowedTracingUrls: ["https://10.1.246.224", "https://localhost"],
+//  proxy: 'https://192.168.16.153:55555',
+  proxy: (options) => `https://192.168.16.153:55555${options.path}?${options.parameters}`,  
 });
 
 datadogRum.setUser({
@@ -48,3 +51,5 @@ createApp(App)
 
   // 타이틀 설정
 document.title = '❗❗블랙리스트 관리❗❗';
+
+

@@ -10,6 +10,22 @@
         class="img-fluid rounded"
         style="max-width: 25%; height: auto;" />
     </div>
+    <!-- 사용자 회원가입 버튼 -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <button @click="openSignUpForm" class="btn btn-primary w-100">
+          📝 회원가입
+        </button>
+      </div>
+    </div>
+    <!-- 로그인 버튼 -->
+   <div class="row justify-content-center mb-4">
+    <div class="col-12 col-md-6 col-lg-4">
+       <button @click="openLoginForm" class="btn btn-success w-100">
+         🔑 로그인
+      </button>
+     </div>
+   </div>
 
     <!-- 사용자 추가 버튼 -->
     <div class="row justify-content-center mb-4">
@@ -92,9 +108,9 @@ export default {
 
     // 사용자 목록 조회
     async loadUsers() {
-      try {
-        const response = await axios.get("http://localhost:3000/users");
-        this.users = response.data;
+  try {
+    const response = await axios.get("https://localhost:4001/users");
+    this.users = response.data;
       } catch (error) {
         console.error("사용자 조회 실패:", error);
       }
